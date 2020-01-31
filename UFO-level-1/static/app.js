@@ -1,10 +1,15 @@
+var table = d3.select("tbody");
+
 //Assign the data from 'data.js' to a descriptive variable
+
 var ufo = data;
 
 //Select the button
-var button = d3.select("#button");
+var button = d3.select("#filter-btn");
 
 button.on("click", function() {
+
+    table.selectAll("tr").remove();
 
     //Select the input element and get the raw HTML node
     var inputUser = d3.select("#datetime");
@@ -18,11 +23,13 @@ button.on("click", function() {
     var filteredData = ufo.filter(i => i.datetime === inputDate);
 
     console.log(filteredData);
+    
+    var tbody = d3.select("tbody");
 
     filteredData.forEach((ufoReport) => {
         var row = tbody.append("tr");
-        Object.entries(ufoReport).forEach(([value]) => {
-            var cell = row.append("<td>");
+        Object.entries(ufoReport).forEach(([key, value]) => {
+            var cell = row.append("td");
             cell.text(value);
         });
     });
